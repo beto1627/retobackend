@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="catalogo" >
+
+  <resultMap id="BaseResultMap" class="pe.bbvacontinental.model.Catalogo" >
+    <result column="n_codcat" property="codigoCatalogo" jdbcType="INTEGER" />
+    <result column="n_coddet" property="codigoDetalle" jdbcType="VARCHAR" />
+    <result column="c_descri" property="descripcion" jdbcType="VARCHAR" />
+    <result column="c_estado" property="estado" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  
+  <select id="findByParameter" resultMap="BaseResultMap" parameterClass="pe.bbvacontinental.model.Catalogo" >
+    select 
+		n_codcat,
+		n_coddet,
+		c_descri,
+		c_estado
+    from catalogo
+    where  
+    	n_codcat = #codigoCatalogo:INTEGER# and
+    	c_estado = #estado:VARCHAR#
+  </select>
+  
+</sqlMap>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="persona" >
+
+  <resultMap id="BaseResultMap" class="pe.bbvacontinental.model.Persona" >
+    <result column="n_codper" property="codigoPersona" jdbcType="INTEGER" />
+    <result column="n_tipdoc" property="tipoDocumento" jdbcType="INTEGER" />
+    <result column="c_numdoc" property="numeroDocumento" jdbcType="VARCHAR" />
+    <result column="c_nombre" property="nombre" jdbcType="VARCHAR" />
+    <result column="c_emaele" property="email" jdbcType="VARCHAR" />
+    <result column="c_estado" property="estado" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  
+  <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Integer" >
+    select 
+		n_codper,
+		n_tipdoc,
+		c_numdoc,
+		c_nombre,
+		c_emaele,
+		c_estado
+    from persona
+    where  
+    	n_codper = #codigoPersona:INTEGER#
+  </select>
+  
+  <update id="update" parameterClass="pe.bbvacontinental.model.Persona" >
+    update persona
+   	set 
+		c_emaele = #email:VARCHAR#
+    where n_codper = #codigoPersona:INTEGER#
+  </update>
+  
+</sqlMap>

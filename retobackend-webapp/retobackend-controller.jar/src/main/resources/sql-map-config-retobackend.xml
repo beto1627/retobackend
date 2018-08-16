@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true" useStatementNamespaces="true" maxSessions="64" maxTransactions="8" maxRequests="128" />
+			
+	<sqlMap resource="pe/bbvacontinental/maps/persona.xml" />
+	<sqlMap resource="pe/bbvacontinental/maps/cuenta.xml" />
+	<sqlMap resource="pe/bbvacontinental/maps/catalogo.xml" />
+	<sqlMap resource="pe/bbvacontinental/maps/movimiento.xml" />
+		
+</sqlMapConfig>

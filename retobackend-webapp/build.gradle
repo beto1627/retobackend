@@ -1,0 +1,29 @@
+buildscript{
+	repositories {
+		maven {
+			url "https://mvnrepository.com/"
+			url "https://mvnrepository.com/"
+			url "https://plugins.gradle.org/m2/"
+			url "http://dl.bintray.com/lv/gradle-plugins/"
+		}
+	}
+	
+	dependencies {
+		classpath "com.lv.plugins:gradle-weblogic-plugin:0.3"
+	}
+}
+
+apply plugin: "com.lv.weblogic"
+
+configurations.all {
+}
+
+subprojects {subproject->
+	group = "pe.bbvacontinental"
+	version = '1.0.0' 
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+}

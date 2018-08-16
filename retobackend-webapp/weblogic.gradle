@@ -1,0 +1,61 @@
+apply plugin: 'com.lv.weblogic'
+
+configurations {
+}
+
+dependencies {
+	
+}
+
+task deployWL() << {
+	wlDeploy {
+				adminurl = 't3://localhost:7001'
+				appversion
+				deploymentName = '${ear.baseName}'
+				source = '${projectDir}/build/libs/${ear.archiveName}'
+				targets = 'myserver'
+				user = 'njoaquin'
+				password = 'N1lt0n87@2'
+				debug = false
+				verbose = true
+	}
+}
+
+task undeployWL() << {
+	wlUndeploy {
+				adminurl = 't3://localhost:7001'
+				appversion
+				deploymentName = '${ear.baseName}'
+				source = '${projectDir}/build/libs/${ear.archiveName}'
+				targets = 'myserver'
+				user = 'njoaquin'
+				password = 'N1lt0n87@2'
+				debug = false
+				verbose = true
+	}
+} 
+
+task reiniciarApp() << {
+	wlUndeploy {
+				adminurl = 't3://localhost:7001'
+				appversion
+				deploymentName = '${ear.baseName}'
+				source = '${projectDir}/build/libs/${ear.archiveName}'
+				targets = 'myserver'
+				user = 'njoaquin'
+				password = 'N1lt0n87@2'
+				debug = false
+				verbose = true
+	}
+	wlDeploy {
+				adminurl = 't3://localhost:7001'
+				appversion
+				deploymentName = '${ear.baseName}'
+				source = '${projectDir}/build/libs/${ear.archiveName}'
+				targets = 'myserver'
+				user = 'njoaquin'
+				password = 'N1lt0n87@2'
+				debug = false
+				verbose = true
+	}
+} 

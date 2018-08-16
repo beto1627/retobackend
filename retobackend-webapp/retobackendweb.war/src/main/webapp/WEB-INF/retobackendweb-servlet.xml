@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<!-- Para el uso de  Anotaciones Spring MVC @Controller -->
+	<mvc:annotation-driven>
+	    <mvc:message-converters register-defaults="false">
+	    	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+	    	<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+	    	<bean class="org.springframework.http.converter.ResourceHttpMessageConverter "/>
+	    	<bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+			<ref bean="jacksonConverter"/>
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- Escanear solo los paquetes correspondientes al Controller INTRANET-->
+	<context:component-scan base-package="pe.bbvacontinental.controller.web,
+										  pe.bbvacontinental.controller.comun"/>
+
+	<!-- Configurar el Resolver para JSP -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="jacksonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="objectMapper" ref="jacksonMapper"/>
+    </bean>
+    <bean id="jacksonMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+	    <property name="serializationInclusion">
+	        <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+	    </property>
+	    <property name="dateFormat">
+	         <bean class="java.text.SimpleDateFormat">
+	         	<constructor-arg type="java.lang.String" value="dd/MM/yyyy"></constructor-arg>
+	         	<property name="timeZone" value="#{T(java.util.TimeZone).getTimeZone('America/Lima')}"/>
+	         </bean>
+	    </property>
+	    <property name="timeZone" value="#{T(java.util.TimeZone).getTimeZone('America/Lima')}"/>
+	</bean>
+	<mvc:resources mapping="resources/**" location="resources/" />
+</beans>

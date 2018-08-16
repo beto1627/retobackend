@@ -1,0 +1,7 @@
+include 'retobackendweb.war',
+		'retobackend-controller.jar',
+		'retobackend.ear'
+
+project(':retobackendweb.war').name='retobackendweb'
+project(':retobackend-controller.jar').name='retobackend-controller'
+project(':retobackend.ear').name='retobackend.ear'

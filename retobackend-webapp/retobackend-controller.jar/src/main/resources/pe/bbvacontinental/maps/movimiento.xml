@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="movimiento">
+
+	<insert id="insert" parameterClass="pe.bbvacontinental.model.Movimiento">
+		insert into movimiento (
+		n_monmov,
+		d_fecpro,
+		n_cueori,
+		n_cuedes,
+		n_tipmov,
+		n_codmon)
+		values (
+		#monto:NUMERIC#, 
+		#fechaProceso:DATE#, 
+		#codigoCuentaOrigen:INTEGER#,
+		#codigoCuentaDestino:INTEGER#,
+		#tipoMovimiento:INTEGER#,
+		#codigoMoneda:INTEGER#)
+	</insert>
+
+</sqlMap>

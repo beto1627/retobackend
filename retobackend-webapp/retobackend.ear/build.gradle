@@ -1,0 +1,20 @@
+apply plugin: 'ear'
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+evaluationDependsOn(':retobackend-controller')
+evaluationDependsOn(':retobackendweb')
+
+dependencies {
+	earlib (group: 'pe.bbvacontinental', name: 'retobackend-controller', version: '1.0.0')
+	deploy project(path:':retobackendweb',configuration:"archives")
+}
+
+ear{
+	deploymentDescriptor {
+		webModule(project(':retobackendweb').war.archiveName,'/retobackend')
+	}
+}
+
+apply from: "$rootDir/weblogic.gradle"

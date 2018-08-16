@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="cuenta" >
+
+  <resultMap id="BaseResultMap" class="pe.bbvacontinental.model.Cuenta" >
+    <result column="n_codcue" property="codigoCuenta" jdbcType="INTEGER" />
+    <result column="c_numcue" property="numeroCuenta" jdbcType="VARCHAR" />
+    <result column="n_tipcue" property="tipoCuenta" jdbcType="INTEGER" />
+    <result column="c_deticu" property="descTipoCuenta" jdbcType="VARCHAR" />
+    <result column="n_codpro" property="codigoProducto" jdbcType="INTEGER" />
+    <result column="c_despro" property="descProducto" jdbcType="VARCHAR" />
+    <result column="n_saldos" property="saldo" jdbcType="NUMERIC" />
+    <result column="n_codmon" property="codigoMoneda" jdbcType="INTEGER" />
+    <result column="c_desmon" property="descMoneda" jdbcType="VARCHAR" />
+    <result column="n_salmin" property="saldoMinimo" jdbcType="NUMERIC" />
+    <result column="n_codper" property="codigoPersona" jdbcType="INTEGER" />
+    <result column="c_estado" property="estado" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  
+  <select id="findByParameter" resultMap="BaseResultMap" parameterClass="pe.bbvacontinental.model.Cuenta" >
+    select 
+		n_codcue,
+		c_numcue,
+		n_tipcue,
+		(select c_descri from catalogo where n_codcat=2 and n_coddet=n_tipcue) c_deticu,
+		n_codpro,
+		(select c_descri from catalogo where n_codcat=3 and n_coddet=n_codpro) c_despro,
+		n_saldos,
+		n_codmon,
+		(select c_descri from catalogo where n_codcat=4 and n_coddet=n_tipcue) c_desmon,
+		n_salmin,
+		n_codper,
+		c_estado
+    from cuenta
+   	<dynamic prepend="where">
+	  <isNotNull prepend=" and " property="codigoPersona">n_codper = #codigoPersona:INTEGER#</isNotNull>
+      <isNotNull prepend=" and " property="estado">c_estado = #estado:VARCHAR#</isNotNull>
+      <isNotNull prepend=" and " property="numeroCuenta">c_numcue = #numeroCuenta:VARCHAR#</isNotNull>  
+	</dynamic>
+  </select>
+  
+  <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="Integer" >
+    select 
+		n_codcue,
+		c_numcue,
+		n_tipcue,
+		(select c_descri from catalogo where n_codcat=2 and n_coddet=n_tipcue) c_deticu,
+		n_codpro,
+		(select c_descri from catalogo where n_codcat=3 and n_coddet=n_codpro) c_despro,
+		n_saldos,
+		n_codmon,
+		(select c_descri from catalogo where n_codcat=4 and n_coddet=n_tipcue) c_desmon,
+		n_salmin,
+		n_codper,
+		c_estado
+    from cuenta
+    where  
+    	n_codcue = #codigoCuenta:INTEGER#
+  </select>
+  
+  <update id="update" parameterClass="pe.bbvacontinental.model.Cuenta" >
+    update cuenta
+   	set 
+		n_saldos = #saldo:NUMERIC#,
+		n_salmin = #saldoMinimo:NUMERIC#
+    where n_codcue = #codigoCuenta:INTEGER#
+  </update>
+  
+</sqlMap>

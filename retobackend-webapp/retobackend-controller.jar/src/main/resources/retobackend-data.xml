@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-lazy-init="true">
+	
+	<jee:jndi-lookup id="retobackendJNDI" jndi-name="jdbc/retobackend" resource-ref="true" />
+	
+
+	<!-- Map XML entidad -->
+	<bean id="retobackend.configlocation" class="java.lang.String">
+		<constructor-arg value="classpath:sql-map-config-retobackend.xml" />
+	</bean>
+	<bean id="retobackend.sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" ref="retobackend.configlocation" />
+	</bean>
+	
+	<!-- CONEXION -->
+	<bean id="retobackend.baseDAO" abstract="true">
+		<property name="sqlMapClient" ref="retobackend.sqlMapClient" />
+		<property name="dataSource" ref="retobackendJNDI" />
+	</bean>
+
+	<!-- ========================= DAO DEFINITIONS: IBATIS IMPLEMENTATIONS ========================= -->
+
+	
+	<alias name="maestros.transactionManager" alias="retobackend.transactionManager"/>
+	
+	<bean id="retobackend.SqlMapPersonaDAO" class="pe.bbvacontinental.daoImpl.SqlMapPersonaDAO" parent="retobackend.baseDAO"/>
+	<bean id="retobackend.SqlMapCuentaDAO" class="pe.bbvacontinental.daoImpl.SqlMapCuentaDAO" parent="retobackend.baseDAO"/>
+	<bean id="retobackend.SqlMapCatalogoDAO" class="pe.bbvacontinental.daoImpl.SqlMapCatalogoDAO" parent="retobackend.baseDAO"/>
+	<bean id="retobackend.SqlMapMovimientoDAO" class="pe.bbvacontinental.daoImpl.SqlMapMovimientoDAO" parent="retobackend.baseDAO"/>
+					
+	<tx:annotation-driven transaction-manager="retobackend.transactionManager" />
+	
+</beans>
